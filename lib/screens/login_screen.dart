@@ -18,88 +18,139 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text("Login")),
-      ),
-      body: Form(
-        key: _key,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              customTextFormField(
-                controller: emailCtrl,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Email Required';
-                  } else {
-                    return null;
-                  }
-                },
-                labelText: "Email",
-                prefixIcon: Icon(Icons.email),
-              ),
-              SizedBox(height: 15),
-              customTextFormField(
-                controller: passCtrl,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Password Required';
-                  } else {
-                    return null;
-                  }
-                },
-                labelText: "Password",
-                prefixIcon: Icon(Icons.password),
-                obscureText: true,
-              ),
-              SizedBox(height: 15),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_key.currentState!.validate()) {
-                      bool success =
-                          await auth.login(emailCtrl.text, passCtrl.text);
-                      if (success) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return HomeScreen();
-                            },
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Invalid Credentials"),
-                          ),
-                        );
-                      }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text("LOGIN"),
+              Container(
+                padding: const EdgeInsets.only(top: 25, left: 10),
+                child: Image.asset(
+                  "assets/pooh.png",
+                  height: 200,
                 ),
               ),
-              TextButton(
-                child: Text("Don't have an account? Sign up"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SignUpScreen();
+              const Text(
+                "Welcome Back,",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                "Make it work, make it right, make it fast",
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 50),
+              Form(
+                key: _key,
+                child: Column(
+                  children: [
+                    customTextFormField(
+                      controller: emailCtrl,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email Required';
+                        } else {
+                          return null;
+                        }
                       },
+                      labelText: "Email",
+                      prefixIcon: Icon(Icons.email),
                     ),
-                  );
-                },
+                    SizedBox(height: 10),
+                    customTextFormField(
+                      controller: passCtrl,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Password Required';
+                        } else {
+                          return null;
+                        }
+                      },
+                      labelText: "Password",
+                      prefixIcon: Icon(Icons.password),
+                      obscureText: true,
+                    ),
+                    customContainer(
+                      data: "Forget Password ?",
+                      color: Colors.blue,
+                      padding: const EdgeInsets.all(15),
+                      alignment: Alignment.topRight,
+                      fontSize: 15,
+                    ),
+                    SizedBox(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_key.currentState!.validate()) {
+                            bool success =
+                                await auth.login(emailCtrl.text, passCtrl.text);
+                            if (success) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return HomeScreen();
+                                  },
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Invalid Credentials"),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          backgroundColor: Colors.black,
+                        ),
+                        child: Text("LOGIN", style: TextStyle(color: Colors.white, fontSize: 16),),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        customContainer(data: "Don't have an Account? ", fontSize: 15),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return SignUpScreen();
+                                },
+                              ),
+                            );
+                          },
+                          style: ButtonStyle(
+                            overlayColor:
+                                WidgetStateProperty.all(Colors.transparent),
+                            padding: WidgetStateProperty.all(EdgeInsets.zero),
+                            tapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap, // optional
+                          ),
+                          child: Text(
+                            "Sign up",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -120,15 +171,35 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: validator,
       obscureText: obscureText,
       decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        labelText: labelText,
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          labelText: labelText,
+          prefixIcon: prefixIcon,
+          prefixIconColor: Colors.grey,
+          suffixIcon: suffixIcon,
+          suffixIconColor: Colors.grey),
+    );
+  }
+
+  Widget customContainer(
+      {required String data,
+      Color? color,
+      EdgeInsetsGeometry? padding,
+      AlignmentGeometry? alignment,
+      double? fontSize}) {
+    return Container(
+      padding: padding,
+      alignment: alignment ?? Alignment.center,
+      child: Text(
+        data,
+        style: TextStyle(
+            fontWeight: FontWeight.w500, color: color, fontSize: fontSize),
       ),
     );
   }

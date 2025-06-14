@@ -17,74 +17,137 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("SIGNUP"),
-      ),
-      body: Form(
-        key: _key,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              customTextFormField(
-                controller: emailCtrl,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Email Required';
-                  } else {
-                    return null;
-                  }
-                },
-                labelText: "Email",
-                prefixIcon: Icon(Icons.email),
+              Container(
+                padding: const EdgeInsets.only(top: 25, left: 10),
+                child: Image.asset(
+                  "assets/pooh.png",
+                  height: 200,
+                ),
               ),
-              SizedBox(height: 15),
-              customTextFormField(
-                controller: passCtrl,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Password Required';
-                  } else {
-                    return null;
-                  }
-                },
-                labelText: "Password",
-                prefixIcon: Icon(Icons.password),
-                obscureText: true,
+              const Text(
+                "Get On Board!",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              SizedBox(height: 15),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_key.currentState!.validate()) {
-                      bool success =
-                      await auth.signup(emailCtrl.text, passCtrl.text);
-                      if (success) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return LoginScreen();
-                            },
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Email already exists"),
-                          ),
-                        );
-                      }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              const Text(
+                "Create your profile to start your journey.",
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 30),
+              Form(
+                key: _key,
+                child: Column(
+                  children: [
+                    customTextFormField(
+                      controller: emailCtrl,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email Required';
+                        } else {
+                          return null;
+                        }
+                      },
+                      labelText: "Email",
+                      prefixIcon: Icon(Icons.email),
                     ),
-                  ),
-                  child: Text("SIGNUP"),
+                    SizedBox(height: 10),
+                    customTextFormField(
+                      controller: passCtrl,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Password Required';
+                        } else {
+                          return null;
+                        }
+                      },
+                      labelText: "Password",
+                      prefixIcon: Icon(Icons.password),
+                      obscureText: true,
+                    ),
+                    SizedBox(height: 15),
+                    SizedBox(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_key.currentState!.validate()) {
+                            bool success = await auth.signup(
+                                emailCtrl.text, passCtrl.text);
+                            if (success) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return LoginScreen();
+                                  },
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Email already exists"),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            backgroundColor: Colors.black),
+                        child: Text(
+                          "SIGNUP",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        customContainer(data: "Already have an Account? ",fontSize: 15),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return LoginScreen();
+                                },
+                              ),
+                            );
+                          },
+                          style: ButtonStyle(
+                            overlayColor:
+                            WidgetStateProperty.all(Colors.transparent),
+                            padding: WidgetStateProperty.all(EdgeInsets.zero),
+                            tapTargetSize:
+                            MaterialTapTargetSize.shrinkWrap, // optional
+                          ),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 16
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -96,25 +159,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget customTextFormField(
       {TextEditingController? controller,
-        String? Function(String?)? validator,
-        Widget? prefixIcon,
-        String? labelText,
-        bool obscureText = false,
-        Widget? suffixIcon}) {
+      String? Function(String?)? validator,
+      Widget? prefixIcon,
+      String? labelText,
+      bool obscureText = false,
+      Widget? suffixIcon}) {
     return TextFormField(
       controller: controller,
       validator: validator,
       obscureText: obscureText,
       decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        labelText: labelText,
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          labelText: labelText,
+          prefixIcon: prefixIcon,
+          prefixIconColor: Colors.grey,
+          suffixIcon: suffixIcon,
+          suffixIconColor: Colors.grey),
+    );
+  }
+
+  Widget customContainer(
+      {required String data,
+      Color? color,
+      EdgeInsetsGeometry? padding,
+      AlignmentGeometry? alignment,
+      double? fontSize}) {
+    return Container(
+      padding: padding,
+      alignment: alignment ?? Alignment.center,
+      child: Text(
+        data,
+        style: TextStyle(
+            fontWeight: FontWeight.w500, color: color, fontSize: fontSize),
       ),
     );
   }
