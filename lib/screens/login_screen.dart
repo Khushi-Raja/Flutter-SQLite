@@ -88,9 +88,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           style: ButtonStyle(
-                            overlayColor: WidgetStateProperty.all(Colors.transparent),
+                            overlayColor:
+                                WidgetStateProperty.all(Colors.transparent),
                             padding: WidgetStateProperty.all(EdgeInsets.zero),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap, // optional
+                            tapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap, // optional
                           ),
                           child: Text(
                             "Forget Password?",
@@ -111,13 +113,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             bool success =
                                 await auth.login(emailCtrl.text, passCtrl.text);
                             if (success) {
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) {
-                                    return HomeScreen();
-                                  },
+                                  builder: (context) => const HomeScreen(),
                                 ),
+                                (route) =>
+                                    false, // Removes all previous routes including LoginScreen
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -130,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3.w),
+                            borderRadius: BorderRadius.circular(2.w),
                           ),
                           backgroundColor: Colors.black,
                         ),
@@ -166,9 +168,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 MaterialTapTargetSize.shrinkWrap, // optional
                           ),
                           child: Text(
-                            "Sign up",
+                            "SIGNUP",
                             style:
-                                TextStyle(color: Colors.blue, fontSize: 17.sp),
+                                TextStyle(color: Colors.blue, fontSize: 16.sp),
                           ),
                         ),
                       ],
@@ -196,11 +198,11 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: obscureText,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(3.w),
+            borderRadius: BorderRadius.circular(2.w),
             borderSide: BorderSide(color: Colors.grey),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(3.w),
+            borderRadius: BorderRadius.circular(2.w),
             borderSide: BorderSide(color: Colors.grey),
           ),
           labelText: labelText,

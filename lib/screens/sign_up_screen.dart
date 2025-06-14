@@ -103,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3.w),
+                              borderRadius: BorderRadius.circular(2.w),
                             ),
                             backgroundColor: Colors.black),
                         child: Text(
@@ -139,10 +139,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             MaterialTapTargetSize.shrinkWrap, // optional
                           ),
                           child: Text(
-                            "Login",
+                            "LOGIN",
                             style: TextStyle(
                                 color: Colors.blue,
-                                fontSize: 17.sp
+                                fontSize: 16.sp
                             ),
                           ),
                         ),
@@ -171,11 +171,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       obscureText: obscureText,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(3.w),
+            borderRadius: BorderRadius.circular(2.w),
             borderSide: BorderSide(color: Colors.grey),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(3.w),
+            borderRadius: BorderRadius.circular(2.w),
             borderSide: BorderSide(color: Colors.grey),
           ),
           labelText: labelText,
