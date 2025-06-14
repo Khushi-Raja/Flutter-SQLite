@@ -46,7 +46,3 @@ app.*.map.json
 
 
 .metadata
-android/
-web/
-test/
-pubspec.lock
