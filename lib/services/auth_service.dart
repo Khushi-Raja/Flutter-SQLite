@@ -50,5 +50,4 @@ class AuthService {
     );
     return result > 0;
   }
-
 }
