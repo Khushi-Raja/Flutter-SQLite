@@ -38,4 +38,17 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('isLoggedIn');
   }
+
+  Future<bool> updatePassword(String email, String newPassword) async {
+    final db = await _dbHelper.database; // Access db from DBHelper
+    final hashedPassword = _hashPassword(newPassword); // Hash it
+    final result = await db.update(
+      'users',
+      {'password': hashedPassword},
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+    return result > 0;
+  }
+
 }

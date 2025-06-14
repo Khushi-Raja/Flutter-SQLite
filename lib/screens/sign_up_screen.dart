@@ -1,6 +1,7 @@
 import 'package:brainybeam/screens/login_screen.dart';
 import 'package:brainybeam/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -20,29 +21,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10),
+          padding: EdgeInsets.symmetric(horizontal: 3.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 25, left: 10),
+                padding: EdgeInsets.only(top: 4.h, left: 2.w),
                 child: Image.asset(
                   "assets/pooh.png",
-                  height: 200,
+                  height: 25.h,
                 ),
               ),
-              const Text(
+              Text(
                 "Get On Board!",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Text(
+              Text(
                 "Create your profile to start your journey.",
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16.sp),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: 4.h),
               Form(
                 key: _key,
                 child: Column(
@@ -59,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       labelText: "Email",
                       prefixIcon: Icon(Icons.email),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 1.5.h),
                     customTextFormField(
                       controller: passCtrl,
                       validator: (value) {
@@ -73,10 +74,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       prefixIcon: Icon(Icons.password),
                       obscureText: true,
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 3.h),
                     SizedBox(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 6.h,
+                      width: 90.w,
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_key.currentState!.validate()) {
@@ -102,23 +103,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(3.w),
                             ),
                             backgroundColor: Colors.black),
                         child: Text(
                           "SIGNUP",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 1.5.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        customContainer(data: "Already have an Account? ",fontSize: 15),
+                        customContainer(data: "Already have an Account? ",fontSize: 16.sp),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -141,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             "Login",
                             style: TextStyle(
                                 color: Colors.blue,
-                                fontSize: 16
+                                fontSize: 17.sp
                             ),
                           ),
                         ),
@@ -170,11 +171,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       obscureText: obscureText,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(3.w),
             borderSide: BorderSide(color: Colors.grey),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(3.w),
             borderSide: BorderSide(color: Colors.grey),
           ),
           labelText: labelText,

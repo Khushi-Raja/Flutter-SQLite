@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _startApp() async {
-    // ✅ Allow splash logo to be visible for 2 seconds
+    // Allow splash logo to be visible for 2 seconds
     await Future.delayed(const Duration(seconds: 2));
 
     final prefs = await SharedPreferences.getInstance();
