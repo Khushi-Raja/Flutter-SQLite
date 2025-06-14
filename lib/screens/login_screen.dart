@@ -77,23 +77,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => _buildForgotPasswordDialog(context),
-                          );
-                        },
-                        child: Text(
-                          "Forget Password?",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Colors.blue,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  _buildForgotPasswordDialog(context),
+                            );
+                          },
+                          style: ButtonStyle(
+                            overlayColor: WidgetStateProperty.all(Colors.transparent),
+                            padding: WidgetStateProperty.all(EdgeInsets.zero),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap, // optional
+                          ),
+                          child: Text(
+                            "Forget Password?",
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                       ),
                     ),
-
                     SizedBox(
                       height: 6.h,
                       width: 90.w,
@@ -126,14 +134,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           backgroundColor: Colors.black,
                         ),
-                        child: Text("LOGIN", style: TextStyle(color: Colors.white, fontSize: 16.sp),),
+                        child: Text(
+                          "LOGIN",
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 16.sp),
+                        ),
                       ),
                     ),
                     SizedBox(height: 1.5.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        customContainer(data: "Don't have an Account? ", fontSize: 16.sp),
+                        customContainer(
+                            data: "Don't have an Account? ", fontSize: 16.sp),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -154,10 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: Text(
                             "Sign up",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 17.sp
-                            ),
+                            style:
+                                TextStyle(color: Colors.blue, fontSize: 17.sp),
                           ),
                         ),
                       ],
@@ -229,17 +240,18 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextFormField(
+            customTextFormField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+              labelText: "Email",
               validator: (value) => value!.isEmpty ? 'Enter email' : null,
             ),
-            TextFormField(
+            SizedBox(height: 1.5.h),
+            customTextFormField(
               controller: newPasswordController,
               obscureText: true,
-              decoration: const InputDecoration(labelText: "New Password"),
+              labelText: "New Password",
               validator: (value) =>
-              value!.length < 6 ? 'Min 6 characters' : null,
+                  value!.length < 6 ? 'Min 6 characters' : null,
             ),
           ],
         ),
@@ -247,9 +259,18 @@ class _LoginScreenState extends State<LoginScreen> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
+          style: ButtonStyle(
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            padding: WidgetStateProperty.all(EdgeInsets.zero),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap, // optional
+          ),
+          child: Text(
+            "Cancel",
+            style: TextStyle(fontSize: 16.sp),
+          ),
         ),
-        ElevatedButton(
+        Spacer(),
+        TextButton(
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
               final success = await auth.updatePassword(
@@ -260,17 +281,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(success
-                      ? "Password updated"
-                      : "Email not found"),
+                  content: Text(
+                    success ? "Password updated" : "Email not found",
+                  ),
                 ),
               );
             }
           },
-          child: const Text("Update"),
+          style: ButtonStyle(
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            padding: WidgetStateProperty.all(EdgeInsets.zero),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap, // optional
+          ),
+          child: Text(
+            "Update",
+            style: TextStyle(fontSize: 16.sp),
+          ),
         ),
       ],
     );
   }
-
 }
