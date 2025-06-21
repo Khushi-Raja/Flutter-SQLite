@@ -1,7 +1,11 @@
-import 'package:brainybeam/screens/login_screen.dart';
+import 'package:brainybeam/authentication/login_screen.dart';
+import 'package:brainybeam/components/custom_button.dart';
 import 'package:brainybeam/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../components/custom_container.dart';
+import '../components/custom_textfield.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -48,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 key: _key,
                 child: Column(
                   children: [
-                    customTextFormField(
+                    CustomTextFormField(
                       controller: emailCtrl,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -59,9 +63,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       labelText: "Email",
                       prefixIcon: Icon(Icons.email),
+                      keyboardType: TextInputType.text,
+                      obscureText: false,
                     ),
                     SizedBox(height: 1.5.h),
-                    customTextFormField(
+                    CustomTextFormField(
                       controller: passCtrl,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -73,53 +79,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       labelText: "Password",
                       prefixIcon: Icon(Icons.password),
                       obscureText: true,
+                      keyboardType: TextInputType.text,
                     ),
                     SizedBox(height: 3.h),
-                    SizedBox(
-                      height: 6.h,
-                      width: 90.w,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          if (_key.currentState!.validate()) {
-                            bool success = await auth.signup(
-                                emailCtrl.text, passCtrl.text);
-                            if (success) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return LoginScreen();
-                                  },
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Email already exists"),
-                                ),
-                              );
-                            }
+                    CustomButton(
+                      buttonName: "SIGNUP",
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                      onPressed: () async {
+                        if (_key.currentState!.validate()) {
+                          bool success =
+                              await auth.signup(emailCtrl.text, passCtrl.text);
+                          if (success) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return LoginScreen();
+                                },
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Email already exists"),
+                              ),
+                            );
                           }
-                        },
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.w),
-                            ),
-                            backgroundColor: Colors.black),
-                        child: Text(
-                          "SIGNUP",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ),
+                        }
+                      },
                     ),
                     SizedBox(height: 1.5.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        customContainer(data: "Already have an Account? ",fontSize: 16.sp),
+                        CustomContainer(
+                            data: "Already have an Account? ", fontSize: 16.sp),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -133,17 +128,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           style: ButtonStyle(
                             overlayColor:
-                            WidgetStateProperty.all(Colors.transparent),
+                                WidgetStateProperty.all(Colors.transparent),
                             padding: WidgetStateProperty.all(EdgeInsets.zero),
                             tapTargetSize:
-                            MaterialTapTargetSize.shrinkWrap, // optional
+                                MaterialTapTargetSize.shrinkWrap, // optional
                           ),
                           child: Text(
                             "LOGIN",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16.sp
-                            ),
+                            style:
+                                TextStyle(color: Colors.blue, fontSize: 16.sp),
                           ),
                         ),
                       ],
@@ -154,51 +147,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget customTextFormField(
-      {TextEditingController? controller,
-      String? Function(String?)? validator,
-      Widget? prefixIcon,
-      String? labelText,
-      bool obscureText = false,
-      Widget? suffixIcon}) {
-    return TextFormField(
-      controller: controller,
-      validator: validator,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(2.w),
-            borderSide: BorderSide(color: Colors.grey),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(2.w),
-            borderSide: BorderSide(color: Colors.grey),
-          ),
-          labelText: labelText,
-          prefixIcon: prefixIcon,
-          prefixIconColor: Colors.grey,
-          suffixIcon: suffixIcon,
-          suffixIconColor: Colors.grey),
-    );
-  }
-
-  Widget customContainer(
-      {required String data,
-      Color? color,
-      EdgeInsetsGeometry? padding,
-      AlignmentGeometry? alignment,
-      double? fontSize}) {
-    return Container(
-      padding: padding,
-      alignment: alignment ?? Alignment.center,
-      child: Text(
-        data,
-        style: TextStyle(
-            fontWeight: FontWeight.w500, color: color, fontSize: fontSize),
       ),
     );
   }

@@ -1,6 +1,9 @@
-import 'package:brainybeam/screens/splash_screen.dart';
+import 'package:brainybeam/authentication/login_screen.dart';
+import 'package:brainybeam/authentication/splash_screen.dart';
+import 'package:brainybeam/screens/user/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -15,14 +18,19 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'BrainyBeam',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: SplashScreen(),
+          initialRoute: '/splash',
+          routes: {
+            '/splash': (context) => const SplashScreen(),
+            '/login': (context) => const LoginScreen(),
+            '/home': (context) => const HomeScreen(),
+          },
         );
-      }
+      },
     );
   }
 }

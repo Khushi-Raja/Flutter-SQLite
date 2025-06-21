@@ -1,8 +1,9 @@
-import 'package:brainybeam/screens/home_screen.dart';
-import 'package:brainybeam/screens/sign_up_screen.dart';
+import 'package:brainybeam/authentication/sign_up_screen.dart';
 import 'package:brainybeam/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../screens/user/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -89,10 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           style: ButtonStyle(
                             overlayColor:
-                                WidgetStateProperty.all(Colors.transparent),
+                            WidgetStateProperty.all(Colors.transparent),
                             padding: WidgetStateProperty.all(EdgeInsets.zero),
                             tapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap, // optional
+                            MaterialTapTargetSize.shrinkWrap, // optional
                           ),
                           child: Text(
                             "Forget Password?",
@@ -111,15 +112,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () async {
                           if (_key.currentState!.validate()) {
                             bool success =
-                                await auth.login(emailCtrl.text, passCtrl.text);
+                            await auth.login(emailCtrl.text, passCtrl.text);
                             if (success) {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const HomeScreen(),
                                 ),
-                                (route) =>
-                                    false, // Removes all previous routes including LoginScreen
+                                    (route) =>
+                                false, // Removes all previous routes including LoginScreen
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -139,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           "LOGIN",
                           style:
-                              TextStyle(color: Colors.white, fontSize: 16.sp),
+                          TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
                       ),
                     ),
@@ -162,15 +163,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           style: ButtonStyle(
                             overlayColor:
-                                WidgetStateProperty.all(Colors.transparent),
+                            WidgetStateProperty.all(Colors.transparent),
                             padding: WidgetStateProperty.all(EdgeInsets.zero),
                             tapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap, // optional
+                            MaterialTapTargetSize.shrinkWrap, // optional
                           ),
                           child: Text(
                             "SIGNUP",
                             style:
-                                TextStyle(color: Colors.blue, fontSize: 16.sp),
+                            TextStyle(color: Colors.blue, fontSize: 16.sp),
                           ),
                         ),
                       ],
@@ -187,11 +188,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget customTextFormField(
       {TextEditingController? controller,
-      String? Function(String?)? validator,
-      Widget? prefixIcon,
-      String? labelText,
-      bool obscureText = false,
-      Widget? suffixIcon}) {
+        String? Function(String?)? validator,
+        Widget? prefixIcon,
+        String? labelText,
+        bool obscureText = false,
+        Widget? suffixIcon}) {
     return TextFormField(
       controller: controller,
       validator: validator,
@@ -215,10 +216,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget customContainer(
       {required String data,
-      Color? color,
-      EdgeInsetsGeometry? padding,
-      AlignmentGeometry? alignment,
-      double? fontSize}) {
+        Color? color,
+        EdgeInsetsGeometry? padding,
+        AlignmentGeometry? alignment,
+        double? fontSize}) {
     return Container(
       padding: padding,
       alignment: alignment ?? Alignment.center,
@@ -253,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: true,
               labelText: "New Password",
               validator: (value) =>
-                  value!.length < 6 ? 'Min 6 characters' : null,
+              value!.length < 6 ? 'Min 6 characters' : null,
             ),
           ],
         ),

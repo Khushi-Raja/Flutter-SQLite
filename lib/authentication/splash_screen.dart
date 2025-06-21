@@ -1,5 +1,5 @@
-import 'package:brainybeam/screens/home_screen.dart';
-import 'package:brainybeam/screens/login_screen.dart';
+import 'package:brainybeam/screens/user/home_screen.dart';
+import 'package:brainybeam/authentication/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
